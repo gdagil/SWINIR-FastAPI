@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  api:
+    build:
+      context: .
+    ports:
+      - 80:80
+    environment:
+      SWINIR_TASK: real_sr
+      SWINIR_SCALE: 4
+      SWINIR_NOISE: 15
+      SWINIR_JPEG: 40
+      SWINIR_TRAIN_PATCH_SIZE: 128
+      SWINIR_LARGE_MODEL: "True"
+      SWINIR_MODEL: 003_realSR_BSRGAN_DFOWMFC_s64w8_SwinIR-L_x4_GAN
+      SWINIR_TILE: 0
+      SWINIR_TILE_OVERLAP: 32
+
+    volumes:
+      - ./data:/api/data:rw
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+              driver: nvidia
+
